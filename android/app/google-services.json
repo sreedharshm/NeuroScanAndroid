@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "521598542160",
+    "project_id": "eegc-439e2",
+    "storage_bucket": "eegc-439e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521598542160:android:ed4d7f0e10656a4d680c55",
+        "android_client_info": {
+          "package_name": "com.example.eeg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnoT-5TXC7SAtQYQXsJDrITazGBk4YH48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
