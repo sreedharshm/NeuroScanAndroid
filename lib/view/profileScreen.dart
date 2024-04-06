@@ -12,7 +12,10 @@ class ProfileScreeen extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-              title: Text("Log Out"),
+              title: const Text(
+                "Log Out",
+                style: TextStyle(color: Colors.white),
+              ),
               trailing: IconButton(
                 onPressed: () {
                   FireAuth().logout();

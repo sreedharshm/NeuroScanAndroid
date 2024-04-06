@@ -1,5 +1,9 @@
+import 'package:eeg/pdfpreview.dart';
 import 'package:eeg/services/firebaselogin.dart';
+import 'package:eeg/view/addpatientdetails.dart';
+import 'package:eeg/view/downloadScreen.dart';
 import 'package:eeg/view/homeScreen.dart';
+import 'package:eeg/view/upload.dart';
 import 'package:eeg/view/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -46,7 +50,7 @@ class MyApp extends StatelessWidget {
           stream: FireAuth().firebaseAuth.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return HomeScreen();
+              return const PatientScreen();
             } else {
               return const LoginScreen();
             }

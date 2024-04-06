@@ -1,4 +1,7 @@
-import 'package:eeg/view/homeScreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eeg/view/upload.dart';
+import 'package:eeg/view/verifyemail.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../services/firebaselogin.dart';
@@ -28,9 +31,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
         emailController: _emailController.text.trim(),
         passwordController: _passwordController.text.trim());
     if (s == "success") {
+      await FirebaseFirestore.instance
+          .collection('doctor')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({
+        'name': _nameController.text.trim(),
+        'email': _emailController.text.trim(),
+      });
+      FirebaseAuth.instance.currentUser!.sendEmailVerification();
+
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const EmailVerify()),
           (route) => false);
     } else {
       setState(() {
@@ -61,23 +73,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
             //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.45,
+                height: MediaQuery.of(context).size.height * 0.3,
               ),
-              Row(
-                children: [
-                  const Text(
-                    "Sign Up",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 25, color: Colors.grey),
-                  ),
-                ],
+              const Text(
+                "Sign Up",
+                //textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 25, color: Colors.grey),
               ),
               const SizedBox(
                 height: 40,
               ),
               TextFormField(
                 controller: _nameController,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                     filled: true,
                     hintText: "Name",
@@ -92,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               TextFormField(
                 controller: _emailController,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                     filled: true,
                     hintText: "Enter email or phone",
@@ -108,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                     filled: true,
                     hintText: "Enter password",

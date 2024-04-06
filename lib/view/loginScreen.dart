@@ -1,7 +1,10 @@
 import 'package:eeg/services/firebaselogin.dart';
 import 'package:eeg/view/homeScreen.dart';
+import 'package:eeg/view/upload.dart';
 import 'package:eeg/view/navigationScreen.dart';
 import 'package:eeg/view/registerScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,10 +27,15 @@ class _LoginScreenState extends State<LoginScreen> {
         emailController: _emailController.text.trim(),
         passwordController: _passwordController.text.trim());
     if (s == "success") {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-          (route) => false);
+      if (FirebaseAuth.instance.currentUser!.emailVerified)
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const PatientScreen()),
+            (route) => false);
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Your email is not verified")));
+      }
     } else {
       setState(() {
         _isloading = false;
